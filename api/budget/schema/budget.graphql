@@ -1,0 +1,44 @@
+const { gql } = require('apollo-server')
+
+const budgetSchema = gql `
+  type Budget {
+    id: ID!
+    year: Int!
+    months: [BudgetMonth]
+  }
+
+  type BudgetMonth {
+    id: ID!
+    monthName: String!
+    lastMonthBalance: String!
+    currentIncome: String!
+    currentBalance: String!
+    isPaid: Boolean!
+    isCreditCardBillPaid: Boolean!
+    entries: [BudgetEntry]
+    adjustments: [BudgetAdjustmentEntry]
+  }
+
+  type BudgetEntry {
+    description: String!
+    value: Float!
+    date: String
+    type: String!
+    status: String!
+  }
+
+  type BudgetAdjustmentEntry {
+    reason: String!
+    value: Float !
+    date: String!
+    type: String!
+    status: String!
+  }
+
+  type Query {
+    getAllExpensesFromCurrentMonth: [BudgetEntry]
+  }
+
+`
+
+module.exports = budgetSchema
